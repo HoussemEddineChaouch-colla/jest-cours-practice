@@ -222,7 +222,7 @@ Expected result:
 ### 1. The `describe()` Method
 
 ```javascript
-describe(name, fn)
+describe(name, fn);
 ```
 
 **What does it do?**
@@ -262,3 +262,56 @@ describe("Check the Numbers Sum total", () => {
 - You can nest multiple `describe()` blocks.
 - `describe()` does not execute assertions itself; it organizes test cases.
 - Grouping tests improves code readability and maintainability.
+
+## 07 - Jest Watch Mode Usage
+
+When running Jest with `--watchAll`, Jest provides interactive shortcuts to control test execution.
+
+**Available shortcuts:**
+
+| Key     | Description                                       |
+| ------- | ------------------------------------------------- |
+| `f`     | Run only failed tests.                            |
+| `o`     | Run tests related to changed files.               |
+| `p`     | Filter test files using a filename regex pattern. |
+| `t`     | Filter tests using a test name regex pattern.     |
+| `q`     | Quit watch mode.                                  |
+| `Enter` | Trigger a test run manually.                      |
+
+**Important:** These shortcuts are available in Jest's interactive Watch Mode.
+
+## 08 - Write Simple Comments From Tests (JSDoc)
+
+### 1. What is JSDoc?
+
+JSDoc is a documentation syntax used to describe JavaScript functions, parameters, return values, and other code elements.
+
+It uses special comments starting with `/**` instead of ordinary `//` comments.
+
+### 2. Basic JSDoc Syntax
+
+```javascript
+/**
+ * Description of the function.
+ *
+ * @param {number} num1 - First number.
+ * @param {number} num2 - Second number.
+ * @returns {number} The sum of both numbers.
+ */
+function sum(num1, num2) {
+  return num1 + num2;
+}
+```
+
+### 3. Common JSDoc Tags
+
+| Tag            | Purpose                          |
+| -------------- | -------------------------------- |
+| `@param`       | Documents a function parameter.  |
+| `@returns`     | Documents the returned value.    |
+| `@type`        | Defines the type of a variable.  |
+| `@example`     | Provides an example of usage.    |
+| `@description` | Provides a detailed description. |
+
+[JSDoc Link](https://jsdoc.app/)
+**Key Takeaway:** JSDoc makes JavaScript code easier to understand, maintain, and document.
