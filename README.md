@@ -216,3 +216,49 @@ Expected result:
 - `expect()` receives the actual value.
 - `.toBe()` compares the actual result with the expected value.
 - `module.exports` and `require()` allow sharing functions between files.
+
+## 06 - Jest Global Methods: Describe
+
+### 1. The `describe()` Method
+
+```javascript
+describe(name, fn)
+```
+
+**What does it do?**
+
+The `describe()` method groups related test cases into a logical test suite.
+
+It helps organize tests into categories, making them easier to read, understand, and maintain.
+
+### 2. Nested Describe Blocks
+
+You can also use `describe()` inside another `describe()` to create nested groups.
+
+Example:
+
+```javascript
+describe("Check the Numbers Sum total", () => {
+  describe("Check If No number or one number only", () => {
+    // Tests related to zero or one argument
+  });
+
+  describe("For more than one number", () => {
+    // Tests related to multiple arguments
+  });
+});
+```
+
+**Understanding the structure:**
+
+- **Outer describe:** Groups all tests related to the sum function.
+- **First nested describe:** Groups tests for zero or one argument.
+- **Second nested describe:** Groups tests for multiple arguments.
+- **test():** Defines individual test cases inside each group.
+
+### Key Takeaways
+
+- `describe()` organizes related tests into groups.
+- You can nest multiple `describe()` blocks.
+- `describe()` does not execute assertions itself; it organizes test cases.
+- Grouping tests improves code readability and maintainability.
