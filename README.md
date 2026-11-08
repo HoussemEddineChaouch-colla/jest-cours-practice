@@ -489,3 +489,86 @@ Running Test 2
 - `beforeEach()` and `afterEach()` execute for every test.
 - These methods help manage test setup and cleanup.
 - All four methods can be used inside `describe()` blocks to manage setup and teardown for a specific group of tests.
+
+## 11 - Jest Matchers Part 1 And Trainings
+
+### 1. What Are Jest Matchers?
+
+Matchers are methods used with `expect()` to verify whether an actual value matches an expected condition.
+
+### 2. `toBe()`
+
+Checks whether a value is exactly equal to the expected value (using `Object.is()`).
+
+```javascript
+expect(allData.length).toBe(6);
+```
+
+**Use case:** Check whether the array length is exactly 6.
+
+### 3. `toHaveLength()`
+
+Checks the length of an array, string, or another object with a `length` property.
+
+```javascript
+expect(allData).toHaveLength(6);
+expect("Houssem").toHaveLength(7);
+```
+
+**Use case:** Verify the number of elements in an array or characters in a string.
+
+### 4. `toContain()`
+
+Checks whether an array or another iterable contains a specific value.
+
+```javascript
+expect(allData).toContain(3);
+```
+
+**Use case:** Check whether the array contains the number `3`.
+
+### 5. `.not` Modifier
+
+The `.not` modifier reverses the expected condition of a matcher.
+
+```javascript
+expect(allData).not.toContain(8);
+
+expect("Houssem").not.toHaveLength(8);
+```
+
+**Use case:** Verify that a value does not exist or a condition is not satisfied.
+
+### 6. Using A For Loop With Matchers
+
+You can combine JavaScript loops with Jest matchers to check multiple values individually.
+
+```javascript
+for (let i = 0; i < allData.length; i++) {
+  expect(allData[i]).not.toBe(0);
+}
+```
+
+**What does it do?**
+
+- Iterates through every element in the array.
+- Checks each element individually.
+- Verifies that no element is equal to `0`.
+- If any element equals `0`, the test fails.
+
+### 7. Quick Comparison
+
+| Matcher                | Purpose                                      |
+| ---------------------- | -------------------------------------------- |
+| `toBe(value)`          | Checks exact equality using `Object.is()`.   |
+| `toHaveLength(number)` | Checks the length of a value.                |
+| `toContain(value)`     | Checks whether an iterable contains a value. |
+| `.not`                 | Reverses the matcher condition.              |
+
+### Key Takeaways
+
+- `expect()` receives the actual value being tested.
+- Matchers verify specific conditions.
+- `.not` allows you to test negative conditions.
+- You can combine matchers with JavaScript loops for multiple assertions.
+- Different matchers can sometimes verify the same result in different ways.
