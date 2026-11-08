@@ -5,7 +5,7 @@ const theSum = require("../sum");
 // describe(name, fn)
 
 describe("Check the Numbers Sum total", () => {
-  describe("Check If No number or one number only", () => {
+  describe.skip("Check If No number or one number only", () => {
     test("should 0 if no number", () => {
       expect(theSum()).toBe(0);
     });

@@ -315,3 +315,61 @@ function sum(num1, num2) {
 
 [JSDoc Link](https://jsdoc.app/)
 **Key Takeaway:** JSDoc makes JavaScript code easier to understand, maintain, and document.
+
+## 09 - Jest Global Methods: Test Only And Skip
+
+### 1. `test.only()`
+
+The `test.only()` method tells Jest to execute **only the specified test**, ignoring other tests in the same run.
+
+```javascript
+test.only("should return the correct sum", () => {
+  expect(theSum(5, 4)).toBe(9);
+});
+```
+
+**Use case:** Useful when you want to focus on debugging or testing a specific test case.
+
+### 2. `test.skip()`
+
+The `test.skip()` method tells Jest to **skip the specified test** without executing it.
+
+```javascript
+test.skip("should return the correct sum", () => {
+  expect(theSum(5, 4)).toBe(9);
+});
+```
+
+**Use case:** Useful when a test is temporarily disabled or not ready to be executed.
+
+### 3. Describe Only And Skip
+
+You can also apply these methods to `describe()` blocks:
+
+```javascript
+describe.only("Sum tests", () => {
+  // Only this test group will run
+});
+
+describe.skip("Other tests", () => {
+  // This entire test group will be skipped
+});
+```
+
+### 4. Quick Comparison
+
+| Method | Behavior |
+|---|---|
+| `test()` | Executes the test normally. |
+| `test.only()` | Executes only the selected test. |
+| `test.skip()` | Skips the selected test. |
+| `describe.only()` | Executes only the selected test group. |
+| `describe.skip()` | Skips the entire selected test group. |
+
+### Key Takeaways
+
+- `.only()` focuses test execution on selected tests or groups.
+- `.skip()` temporarily disables tests without deleting them.
+- `it.only()` and `it.skip()` work exactly like their `test()` equivalents.
+
+**Important:** Avoid committing `test.only()` or `describe.only()` to production branches. They can cause Jest to ignore the rest of your test suite.
