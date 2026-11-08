@@ -127,3 +127,92 @@ Snapshots:   0 total
 ```javascript
 const sayHello = require("../say");
 ```
+
+## 04 - Jest Global Methods Test Part 1
+
+### 1. Jest Global Methods
+
+Jest provides global methods that can be used directly without importing them.
+
+Two methods for defining test cases are:
+
+```javascript
+test(name, fn, timeout);
+it(name, fn, timeout);
+```
+
+**What do these parameters mean?**
+
+- `name`: A description of what the test should verify.
+- `fn`: A callback function containing the test logic.
+- `timeout`: Optional maximum execution time for the test.
+
+**Important:** `test()` and `it()` do exactly the same thing in Jest. You can use either one.
+
+### 2. Create the Sum Function
+
+Create `sum.js`:
+
+```javascript
+const theSum = (num1, num2, num3) => {
+  return (num1 || 0) + (num2 || null) + (num3 || null);
+};
+
+module.exports = theSum;
+```
+
+**Understanding the function:**
+
+- Accepts up to three numbers.
+- Adds the provided numbers.
+- Uses fallback values when arguments are missing.
+- Exports the function using `module.exports`.
+
+### 3. Write Your Tests
+
+Create `sum.test.js`:
+
+```javascript
+const theSum = require("../sum");
+
+// test(name, fn, timeout)
+// it(name, fn, timeout)
+
+test("should return the same number", () => {
+  expect(theSum(5)).toBe(5);
+});
+
+test("should return the number one + two", () => {
+  expect(theSum(5, 4)).toBe(9);
+});
+
+test("should return the number one + two + three", () => {
+  expect(theSum(5, 4, 1)).toBe(10);
+});
+
+test("should return 0 if no number is provided", () => {
+  expect(theSum()).toBe(0);
+});
+```
+
+### 4. Test Results
+
+Run:
+
+```bash
+npm test
+```
+
+Expected result:
+
+- 4 tests executed.
+- 4 tests passed.
+- 0 tests failed.
+
+### Key Takeaways
+
+- `test()` defines a test case.
+- `it()` is an alias for `test()`.
+- `expect()` receives the actual value.
+- `.toBe()` compares the actual result with the expected value.
+- `module.exports` and `require()` allow sharing functions between files.
