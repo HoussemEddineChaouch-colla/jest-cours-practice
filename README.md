@@ -358,13 +358,13 @@ describe.skip("Other tests", () => {
 
 ### 4. Quick Comparison
 
-| Method | Behavior |
-|---|---|
-| `test()` | Executes the test normally. |
-| `test.only()` | Executes only the selected test. |
-| `test.skip()` | Skips the selected test. |
+| Method            | Behavior                               |
+| ----------------- | -------------------------------------- |
+| `test()`          | Executes the test normally.            |
+| `test.only()`     | Executes only the selected test.       |
+| `test.skip()`     | Skips the selected test.               |
 | `describe.only()` | Executes only the selected test group. |
-| `describe.skip()` | Skips the entire selected test group. |
+| `describe.skip()` | Skips the entire selected test group.  |
 
 ### Key Takeaways
 
@@ -373,3 +373,119 @@ describe.skip("Other tests", () => {
 - `it.only()` and `it.skip()` work exactly like their `test()` equivalents.
 
 **Important:** Avoid committing `test.only()` or `describe.only()` to production branches. They can cause Jest to ignore the rest of your test suite.
+
+## 10 - Jest Global Methods: BeforeAll, BeforeEach, AfterAll And AfterEach
+
+### 1. What Are Setup And Teardown Methods?
+
+Jest provides four global methods to execute code before and after tests.
+
+They are useful for preparing the testing environment, initializing resources, and cleaning up after tests.
+
+### 2. `beforeAll()`
+
+Executes a callback **once before all tests** in the current test scope.
+
+```javascript
+beforeAll(() => {
+  console.log("Before all tests");
+});
+```
+
+**Use case:** Initialize something that all tests need, such as connecting to a database.
+
+### 3. `beforeEach()`
+
+Executes a callback **before each individual test**.
+
+```javascript
+beforeEach(() => {
+  console.log("Before each test");
+});
+```
+
+**Use case:** Reset variables or prepare fresh test data before every test.
+
+### 4. `afterAll()`
+
+Executes a callback **once after all tests** in the current test scope.
+
+```javascript
+afterAll(() => {
+  console.log("After all tests");
+});
+```
+
+**Use case:** Close database connections or release shared resources.
+
+### 5. `afterEach()`
+
+Executes a callback **after each individual test**.
+
+```javascript
+afterEach(() => {
+  console.log("After each test");
+});
+```
+
+**Use case:** Clean up temporary data or reset test state after every test.
+
+### 6. Execution Order Example
+
+```javascript
+beforeAll(() => {
+  console.log("1. Before All");
+});
+
+beforeEach(() => {
+  console.log("2. Before Each");
+});
+
+afterEach(() => {
+  console.log("3. After Each");
+});
+
+afterAll(() => {
+  console.log("4. After All");
+});
+
+test("Test 1", () => {
+  console.log("Running Test 1");
+});
+
+test("Test 2", () => {
+  console.log("Running Test 2");
+});
+```
+
+**Expected execution order:**
+
+```text
+1. Before All
+
+2. Before Each
+Running Test 1
+3. After Each
+
+2. Before Each
+Running Test 2
+3. After Each
+
+4. After All
+```
+
+### 7. Quick Comparison
+
+| Method         | Execution              |
+| -------------- | ---------------------- |
+| `beforeAll()`  | Once before all tests. |
+| `beforeEach()` | Before every test.     |
+| `afterEach()`  | After every test.      |
+| `afterAll()`   | Once after all tests.  |
+
+### Key Takeaways
+
+- `beforeAll()` and `afterAll()` execute once per scope.
+- `beforeEach()` and `afterEach()` execute for every test.
+- These methods help manage test setup and cleanup.
+- All four methods can be used inside `describe()` blocks to manage setup and teardown for a specific group of tests.
