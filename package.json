@@ -4,7 +4,7 @@
   "description": "For unit testing cours",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
