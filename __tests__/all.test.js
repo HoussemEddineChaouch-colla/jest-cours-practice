@@ -89,3 +89,25 @@ test("Check For properties age value is 24", () => {
   };
   expect(myObject).toHaveProperty("age", 24);
 });
+
+expect.extend({
+  toBeLargerThan(received, target) {
+    const pass = received > target;
+    if (pass) {
+      return {
+        message: () => `Expected ${received} to Be Larger Than ${target}`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `Error: Expected ${received} to Be Larger Than ${target}`,
+        pass: false,
+      };
+    }
+  },
+});
+
+test("Check if number larger than number", () => {
+  expect(10).toBeLargerThan(5);
+});

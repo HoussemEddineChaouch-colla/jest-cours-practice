@@ -669,7 +669,6 @@ expect(allData[0]).toBeLessThanOrEqual(5);
 - `toBeGreaterThan()` and `toBeLessThan()` exclude equality.
 - `toBeGreaterThanOrEqual()` and `toBeLessThanOrEqual()` include equality.
 
-
 ## 13 - Jest Matchers Part 3 And Trainings
 
 ### 1. `toBeUndefined()`
@@ -736,11 +735,11 @@ expect(myObject).toHaveProperty("age", 24);
 
 ### 5. Quick Comparison
 
-| Matcher | Purpose |
-|---|---|
-| `toBeUndefined()` | Checks whether a value is `undefined`. |
-| `toMatch()` | Checks whether a string matches a RegExp. |
-| `toHaveProperty()` | Checks whether an object has a property. |
+| Matcher                      | Purpose                                           |
+| ---------------------------- | ------------------------------------------------- |
+| `toBeUndefined()`            | Checks whether a value is `undefined`.            |
+| `toMatch()`                  | Checks whether a string matches a RegExp.         |
+| `toHaveProperty()`           | Checks whether an object has a property.          |
 | `toHaveProperty(key, value)` | Checks property existence and its expected value. |
 
 ### Key Takeaways
@@ -750,3 +749,82 @@ expect(myObject).toHaveProperty("age", 24);
 - RegExp allows flexible text matching.
 - `toHaveProperty()` checks object properties.
 - Passing a second argument to `toHaveProperty()` also verifies the property's value.
+
+
+## 14 - Create Your Own Matchers Part 1
+
+### 1. What Are Custom Matchers?
+
+Jest allows you to create your own matchers when the built-in matchers do not cover your specific testing requirements.
+
+Custom matchers help you define reusable assertions with your own logic and error messages.
+
+### 2. `expect.extend()`
+
+The `expect.extend()` method allows you to register custom matchers in Jest.
+
+```javascript
+expect.extend({
+  toBeLargerThan(received, target) {
+    const pass = received > target;
+
+    if (pass) {
+      return {
+        message: () => `Expected ${received} to Be Larger Than ${target}`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `Error: Expected ${received} to Be Larger Than ${target}`,
+        pass: false,
+      };
+    }
+  },
+});
+```
+
+### 3. Understanding The Custom Matcher
+
+- `expect.extend()`: Registers custom matchers in Jest.
+- `toBeLargerThan`: Name of the custom matcher.
+- `received`: The actual value passed to `expect()`.
+- `target`: The expected comparison value.
+- `pass`: A Boolean indicating whether the assertion passed.
+- `message`: A function that returns the error message when the assertion fails.
+
+**How does it work?**
+
+1. `expect(10)` provides the actual value (`received`).
+2. `.toBeLargerThan(5)` provides the comparison value (`target`).
+3. `received > target` evaluates the condition.
+4. Jest uses `pass` to determine whether the test passes or fails.
+
+### 4. Using Your Custom Matcher
+
+```javascript
+test("Check if number larger than number", () => {
+  expect(10).toBeLargerThan(5);
+});
+```
+
+**Expected result:** PASS
+
+Because `10` is greater than `5`.
+
+### 5. Quick Comparison
+
+| Property | Purpose |
+|---|---|
+| `received` | Actual value being tested. |
+| `target` | Value used for comparison. |
+| `pass` | Indicates whether the assertion succeeds. |
+| `message` | Provides an error message when the assertion fails. |
+
+### Key Takeaways
+
+- `expect.extend()` registers custom Jest matchers.
+- Custom matchers allow you to create reusable assertion logic.
+- A custom matcher returns an object containing `pass` and `message`.
+- `pass: true` means the assertion succeeds.
+- `pass: false` means the assertion fails.
