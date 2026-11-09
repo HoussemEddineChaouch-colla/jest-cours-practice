@@ -16,6 +16,7 @@ yarn-error.log*
 
 # Jest coverage
 /coverage
+/reports
 
 # Editor & OS files
 .DS_Store

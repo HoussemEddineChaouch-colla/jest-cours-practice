@@ -1225,3 +1225,151 @@ In this case, the mock function returns `undefined` by default.
 - A mock function can have a custom implementation or no implementation.
 - Jest tracks calls, arguments, and results automatically.
 - Mock functions help test how your code interacts with other functions, without depending on their real implementations.
+
+## 19 - Jest Options
+
+Jest provides several configuration options that allow us to customize how tests are executed and how coverage reports are generated.
+
+These options can be configured directly inside `package.json`, under the `"jest"` property.
+
+### 1. Jest Configuration
+
+Here is the configuration used in this project:
+
+```json
+{
+  "name": "jtest-cours",
+  "version": "1.0.0",
+  "description": "For unit testing cours",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.5.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": ["html"],
+    "coverageDirectory": "reports",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts}"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules",
+      "/build/"
+    ]
+  }
+}
+```
+
+### 2. Understanding the Jest Options
+
+#### `collectCoverage`
+
+```json
+"collectCoverage": true
+```
+
+Enables code coverage collection whenever Jest runs.
+
+Jest measures how much of your source code is executed by your tests.
+
+#### `coverageReporters`
+
+```json
+"coverageReporters": ["html"]
+```
+
+Specifies the formats used to generate coverage reports.
+
+Common reporters include:
+
+| Reporter | Description |
+|---|---|
+| `text` | Displays the coverage report directly in the terminal. |
+| `html` | Generates an interactive HTML report. |
+| `lcov` | Generates an LCOV report, commonly used by coverage tools. |
+| `json` | Generates a JSON coverage report. |
+
+You can use multiple reporters:
+
+```json
+"coverageReporters": ["text", "html"]
+```
+
+This displays the report in the terminal and generates an HTML report.
+
+#### `coverageDirectory`
+
+```json
+"coverageDirectory": "reports"
+```
+
+Defines the directory where Jest saves coverage reports.
+
+In this project, the reports will be generated inside the `reports/` folder instead of the default `coverage/` folder.
+
+#### `collectCoverageFrom`
+
+```json
+"collectCoverageFrom": [
+  "**/*.{js,jsx,ts}"
+]
+```
+
+Specifies which source files Jest should include when collecting coverage.
+
+- `**/` matches files inside any directory and its subdirectories.
+- `*` matches file names.
+- `.{js,jsx,ts}` matches files ending in `.js`, `.jsx`, or `.ts`.
+
+This is important because it allows Jest to include source files even if they are not imported by any test.
+
+#### `coveragePathIgnorePatterns`
+
+```json
+"coveragePathIgnorePatterns": [
+  "/node_modules",
+  "/build/"
+]
+```
+
+Specifies paths that Jest should exclude from coverage collection.
+
+In this example:
+- `/node_modules`: Excludes installed dependencies.
+- `/build/`: Excludes generated build files.
+
+### 3. Running Jest with Coverage
+
+Since `collectCoverage` is enabled in `package.json`, you can run:
+
+```bash
+npm test
+```
+
+You can also enable coverage explicitly through the command line:
+
+```bash
+npm test -- --coverage
+```
+
+To generate the HTML report, open:
+
+```text
+reports/lcov-report/index.html
+```
+
+### Key Takeaways
+
+- Jest options customize test execution and coverage collection.
+- `collectCoverage` enables coverage collection.
+- `coverageReporters` controls the report formats.
+- `coverageDirectory` defines where reports are saved.
+- `collectCoverageFrom` defines which source files are included.
+- `coveragePathIgnorePatterns` excludes specific paths from coverage.
