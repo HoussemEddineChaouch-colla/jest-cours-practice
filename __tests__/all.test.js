@@ -111,3 +111,27 @@ expect.extend({
 test("Check if number larger than number", () => {
   expect(10).toBeLargerThan(5);
 });
+
+expect.extend({
+  toBeBetween(received, start, end) {
+    const pass = received > start && received < end;
+    if (pass) {
+      return {
+        message: () =>
+          `Expected ${received} to be between ${start} and ${end} `,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `Error: Expected ${received} to be between ${start} and ${end} `,
+        pass: false,
+      };
+    }
+  },
+});
+
+test("check if year between years range", () => {
+  expect(1982).toBeBetween(1980, 2020);
+});
+ 

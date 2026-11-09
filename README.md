@@ -750,7 +750,6 @@ expect(myObject).toHaveProperty("age", 24);
 - `toHaveProperty()` checks object properties.
 - Passing a second argument to `toHaveProperty()` also verifies the property's value.
 
-
 ## 14 - Create Your Own Matchers Part 1
 
 ### 1. What Are Custom Matchers?
@@ -814,12 +813,12 @@ Because `10` is greater than `5`.
 
 ### 5. Quick Comparison
 
-| Property | Purpose |
-|---|---|
-| `received` | Actual value being tested. |
-| `target` | Value used for comparison. |
-| `pass` | Indicates whether the assertion succeeds. |
-| `message` | Provides an error message when the assertion fails. |
+| Property   | Purpose                                             |
+| ---------- | --------------------------------------------------- |
+| `received` | Actual value being tested.                          |
+| `target`   | Value used for comparison.                          |
+| `pass`     | Indicates whether the assertion succeeds.           |
+| `message`  | Provides an error message when the assertion fails. |
 
 ### Key Takeaways
 
@@ -828,3 +827,77 @@ Because `10` is greater than `5`.
 - A custom matcher returns an object containing `pass` and `message`.
 - `pass: true` means the assertion succeeds.
 - `pass: false` means the assertion fails.
+
+## 15 - Create Your Own Matchers Part 2
+
+### 1. Creating a Custom Matcher: `toBeBetween()`
+
+In this lesson, we extend our knowledge of `expect.extend()` by creating a custom matcher that checks whether a number falls within a specific range.
+
+```javascript
+expect.extend({
+  toBeBetween(received, start, end) {
+    const pass = received > start && received < end;
+
+    if (pass) {
+      return {
+        message: () => `Expected ${received} to be between ${start} and ${end}`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `Error: Expected ${received} to be between ${start} and ${end}`,
+        pass: false,
+      };
+    }
+  },
+});
+```
+
+### 2. Understanding the Logic
+
+- `received`: The actual value being tested.
+- `start`: The lower boundary of the range.
+- `end`: The upper boundary of the range.
+- `&&`: Ensures both conditions must be true.
+- `pass`: Indicates whether the received value satisfies the condition.
+
+**Condition:**
+
+```javascript
+received > start && received < end;
+```
+
+The value must be strictly greater than `start` AND strictly less than `end`.
+
+### 3. Using the Custom Matcher
+
+```javascript
+test("check if year between years range", () => {
+  expect(1982).toBeBetween(1980, 2020);
+});
+```
+
+**Expected result:** PASS
+
+Because `1982` is greater than `1980` and less than `2020`.
+
+### 4. Important: Exclusive Boundaries
+
+Your matcher uses strict comparisons (`>` and `<`), meaning the boundary values are not included.
+
+| Assertion                              | Result |
+| -------------------------------------- | ------ |
+| `expect(1982).toBeBetween(1980, 2020)` | PASS   |
+| `expect(1980).toBeBetween(1980, 2020)` | FAIL   |
+| `expect(2020).toBeBetween(1980, 2020)` | FAIL   |
+| `expect(2025).toBeBetween(1980, 2020)` | FAIL   |
+
+### Key Takeaways
+
+- `expect.extend()` allows you to register multiple custom matchers.
+- A custom matcher can accept multiple arguments.
+- `&&` checks that multiple conditions are satisfied.
+- `>` and `<` exclude the range boundaries.
+- You can reuse custom matchers across multiple test cases.
