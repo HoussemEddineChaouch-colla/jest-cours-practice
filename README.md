@@ -952,17 +952,18 @@ test("Expect Array Containing", () => {
 **Use case:** Verify that an array contains specific elements without requiring an exact match or order.
 
 **Important:**
+
 - The received array can contain additional elements.
 - The expected elements can appear in any order.
 - All expected elements must be present.
 
 ### 4. Quick Comparison
 
-| Method | Purpose |
-|---|---|
-| `expect.anything()` | Matches anything except `null` and `undefined`. |
-| `expect.any(Number)` | Matches a value of the specified constructor/type. |
-| `expect.any(String)` | Matches a string. |
+| Method                          | Purpose                                                 |
+| ------------------------------- | ------------------------------------------------------- |
+| `expect.anything()`             | Matches anything except `null` and `undefined`.         |
+| `expect.any(Number)`            | Matches a value of the specified constructor/type.      |
+| `expect.any(String)`            | Matches a string.                                       |
 | `expect.arrayContaining([...])` | Checks whether an array contains the expected elements. |
 
 ### Key Takeaways
@@ -1034,25 +1035,25 @@ It tells Jest to collect code coverage information while executing the tests.
 
 ### 4. Understanding Coverage Metrics
 
-| Metric | Meaning |
-|---|---|
-| `% Stmts` | Percentage of executable statements executed. |
-| `% Branch` | Percentage of conditional branches executed. |
-| `% Funcs` | Percentage of functions called. |
-| `% Lines` | Percentage of executable lines executed. |
-| `Uncovered Line #s` | Line numbers that were not covered by tests. |
+| Metric              | Meaning                                       |
+| ------------------- | --------------------------------------------- |
+| `% Stmts`           | Percentage of executable statements executed. |
+| `% Branch`          | Percentage of conditional branches executed.  |
+| `% Funcs`           | Percentage of functions called.               |
+| `% Lines`           | Percentage of executable lines executed.      |
+| `Uncovered Line #s` | Line numbers that were not covered by tests.  |
 
 ### 5. Understanding Your Coverage Results
 
 Your current terminal report:
 
-| File | Statements | Branches | Functions | Lines |
-|---|---:|---:|---:|---:|
-| All files | 95% | 91.66% | 100% | 94.73% |
-| all.js | 100% | 100% | 100% | 100% |
-| input.js | 91.66% | 91.66% | 100% | 91.66% |
-| say.js | 100% | 100% | 100% | 100% |
-| sum.js | 100% | 100% | 100% | 100% |
+| File      | Statements | Branches | Functions |  Lines |
+| --------- | ---------: | -------: | --------: | -----: |
+| All files |        95% |   91.66% |      100% | 94.73% |
+| all.js    |       100% |     100% |      100% |   100% |
+| input.js  |     91.66% |   91.66% |      100% | 91.66% |
+| say.js    |       100% |     100% |      100% |   100% |
+| sum.js    |       100% |     100% |      100% |   100% |
 
 **Important observation:**
 
@@ -1112,3 +1113,115 @@ Open `coverage/lcov-report/index.html` in your browser to explore the report vis
 - `coverageReporters: ["html"]` generates a visual HTML report.
 - Uncovered lines and branches help identify missing test cases.
 - High coverage does not necessarily mean your tests are correct or complete.
+
+## 18 - Mock Functions
+
+### 1. What Is a Mock Function?
+
+A **Mock Function** is a function created by Jest that allows us to simulate a real function and track how it is used during a test.
+
+Instead of creating a normal function, we use `jest.fn()` to create a mock function.
+
+Mock functions are useful when we want to:
+
+- Check whether a function was called.
+- Check how many times a function was called.
+- Check which arguments were passed to it.
+- Check the return value of a function.
+- Simulate the behavior of another function without executing its real implementation.
+
+### 2. Creating a Mock Function with `jest.fn()`
+
+```js
+const mocker = jest.fn((name) => `Hello ${name}`);
+```
+
+**Explanation:**
+
+- `jest.fn()` creates a mock function.
+- `(name) => \`Hello ${name}\`` is the implementation of the mock function.
+- `mocker` is simply the variable name that stores this mock function. You can choose any valid variable name.
+
+When we call `mocker("Houssem")`, Jest executes the provided implementation and returns `"Hello Houssem"`.
+
+### 3. Testing a Mock Function
+
+```js
+test("Mock Function", () => {
+  const mocker = jest.fn((name) => `Hello ${name}`);
+
+  expect(mocker("Houssem")).toBe("Hello Houssem");
+  expect(mocker("Ahmed")).toBe("Hello Ahmed");
+  expect(mocker("Sayed")).toBe("Hello Sayed");
+
+  expect(mocker).toHaveBeenCalled();
+  expect(mocker).toHaveBeenCalledWith("Houssem");
+  expect(mocker).toHaveBeenLastCalledWith("Sayed");
+});
+```
+
+### 4. Understanding Mock Function Matchers
+
+| Matcher                               | Description                                                          |
+| ------------------------------------- | -------------------------------------------------------------------- |
+| `toHaveBeenCalled()`                  | Checks whether the mock function was called at least once.           |
+| `toHaveBeenCalledTimes(3)`            | Checks whether the mock function was called exactly 3 times.         |
+| `toHaveBeenCalledWith("Houssem")`     | Checks whether the function was called with the specified arguments. |
+| `toHaveBeenLastCalledWith("Sayed")`   | Checks whether the last call used the specified arguments.           |
+| `toHaveBeenNthCalledWith(2, "Ahmed")` | Checks whether the second call used the specified arguments.         |
+| `toHaveReturnedWith("Hello Ahmed")`   | Checks whether a call returned the specified value.                  |
+
+### 5. Inspecting Mock Function Information
+
+Jest stores information about every call made to a mock function in the `.mock` property.
+
+For example:
+
+```js
+const mocker = jest.fn((name) => `Hello ${name}`);
+
+mocker("Houssem");
+mocker("Ahmed");
+
+console.log(mocker.mock.calls);
+console.log(mocker.mock.results);
+```
+
+**Important properties:**
+
+- `mocker.mock.calls`: An array containing the arguments passed during each call.
+- `mocker.mock.results`: An array containing the results of each call, including returned values.
+
+For the example above:
+
+```js
+mocker.mock.calls;
+// [["Houssem"], ["Ahmed"]]
+
+mocker.mock.results;
+// [
+//   { type: "return", value: "Hello Houssem" },
+//   { type: "return", value: "Hello Ahmed" }
+// ]
+```
+
+### 6. Mock Functions Without an Implementation
+
+You can also create a mock function without providing an implementation:
+
+```js
+const mocker = jest.fn();
+
+mocker("Houssem");
+
+expect(mocker).toHaveBeenCalledWith("Houssem");
+```
+
+In this case, the mock function returns `undefined` by default.
+
+### Key Takeaways
+
+- `jest.fn()` creates a mock function.
+- A mock function can have a custom implementation or no implementation.
+- Jest tracks calls, arguments, and results automatically.
+- Mock functions help test how your code interacts with other functions, without depending on their real implementations.
