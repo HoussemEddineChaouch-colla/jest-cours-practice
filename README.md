@@ -1256,13 +1256,8 @@ Here is the configuration used in this project:
     "collectCoverage": true,
     "coverageReporters": ["html"],
     "coverageDirectory": "reports",
-    "collectCoverageFrom": [
-      "**/*.{js,jsx,ts}"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules",
-      "/build/"
-    ]
+    "collectCoverageFrom": ["**/*.{js,jsx,ts}"],
+    "coveragePathIgnorePatterns": ["/node_modules", "/build/"]
   }
 }
 ```
@@ -1289,12 +1284,12 @@ Specifies the formats used to generate coverage reports.
 
 Common reporters include:
 
-| Reporter | Description |
-|---|---|
-| `text` | Displays the coverage report directly in the terminal. |
-| `html` | Generates an interactive HTML report. |
-| `lcov` | Generates an LCOV report, commonly used by coverage tools. |
-| `json` | Generates a JSON coverage report. |
+| Reporter | Description                                                |
+| -------- | ---------------------------------------------------------- |
+| `text`   | Displays the coverage report directly in the terminal.     |
+| `html`   | Generates an interactive HTML report.                      |
+| `lcov`   | Generates an LCOV report, commonly used by coverage tools. |
+| `json`   | Generates a JSON coverage report.                          |
 
 You can use multiple reporters:
 
@@ -1342,6 +1337,7 @@ This is important because it allows Jest to include source files even if they ar
 Specifies paths that Jest should exclude from coverage collection.
 
 In this example:
+
 - `/node_modules`: Excludes installed dependencies.
 - `/build/`: Excludes generated build files.
 
@@ -1373,3 +1369,50 @@ reports/lcov-report/index.html
 - `coverageDirectory` defines where reports are saved.
 - `collectCoverageFrom` defines which source files are included.
 - `coveragePathIgnorePatterns` excludes specific paths from coverage.
+
+## 20 - Outro and Where to Continue
+
+Congratulations! You have completed this Jest practice course.
+
+Throughout this course, we explored the fundamentals of JavaScript unit testing and learned how to write, organize, and execute tests using Jest.
+
+### What We Learned
+
+- **Jest Setup:** Installing Jest and configuring the testing environment.
+- **Writing Tests:** Using `test()`, `it()`, and `describe()`.
+- **Test Control:** Using `.only` and `.skip` to control which tests run.
+- **Lifecycle Hooks:** Understanding `beforeAll()`, `beforeEach()`, `afterEach()`, and `afterAll()`.
+- **Matchers:** Testing values, strings, arrays, objects, conditions, and errors.
+- **Custom Matchers:** Creating reusable matchers with `expect.extend()`.
+- **Asymmetric Matchers:** Using `expect.anything()`, `expect.any()`, and `expect.arrayContaining()`.
+- **Code Coverage:** Measuring how much of the source code is covered by tests.
+- **Mock Functions:** Using `jest.fn()` to simulate functions and track their calls.
+- **Jest Configuration:** Customizing Jest through `package.json`.
+
+### Where to Continue?
+
+Completing the fundamentals is only the beginning. Here are some recommended topics to explore next:
+
+1. **Testing Asynchronous Code:** Testing Promises, `async/await`, and asynchronous operations.
+2. **Mocking Modules:** Using `jest.mock()` to mock entire modules.
+3. **Mocking API Requests:** Testing applications that communicate with external APIs.
+4. **Spies:** Using `jest.spyOn()` to monitor existing functions.
+5. **Snapshot Testing:** Using `toMatchSnapshot()` to detect unexpected changes in output.
+6. **Integration Testing:** Testing how multiple parts of an application work together.
+7. **Testing React Applications:** Exploring React Testing Library and Jest.
+
+### Useful Resources
+
+- [Jest Official Documentation](https://jestjs.io/docs/getting-started)
+- [Jest API Reference](https://jestjs.io/docs/api)
+- [Jest Expect Matchers](https://jestjs.io/docs/expect)
+- [Jest Mock Functions](https://jestjs.io/docs/mock-functions)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+
+### Final Note
+
+The best way to improve your testing skills is to apply what you have learned to real projects.
+
+Keep practicing, write tests for your own applications, and remember:
+
+**Good developers don't just write code that works; they write code they can trust.**
