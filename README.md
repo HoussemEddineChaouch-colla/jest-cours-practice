@@ -572,3 +572,99 @@ for (let i = 0; i < allData.length; i++) {
 - `.not` allows you to test negative conditions.
 - You can combine matchers with JavaScript loops for multiple assertions.
 - Different matchers can sometimes verify the same result in different ways.
+
+## 12 - Jest Matchers Part 2 And Trainings
+
+### 1. `toBeFalsy()`
+
+Checks whether the actual value is falsy.
+
+Falsy values in JavaScript include:
+
+```javascript
+false;
+0;
+("");
+null;
+undefined;
+NaN;
+```
+
+Example:
+
+```javascript
+expect(isNaN(allData[i])).toBeFalsy();
+```
+
+**Use case:** Verify that `isNaN(allData[i])` returns `false`, meaning the value is recognized as a number by `isNaN()`.
+
+### 2. `toBeTruthy()`
+
+Checks whether the actual value is truthy.
+
+```javascript
+expect(isNaN(allData[i])).not.toBeTruthy();
+```
+
+**Use case:** Using `.not`, we verify that `isNaN(allData[i])` does not return a truthy value.
+
+**Important:** `toBeFalsy()` and `.not.toBeTruthy()` are logically equivalent.
+
+### 3. `toBeGreaterThan()`
+
+Checks whether a number is strictly greater than the expected value.
+
+```javascript
+expect(allData[1]).toBeGreaterThan(1);
+```
+
+**Condition:** `actual > expected`
+
+### 4. `toBeGreaterThanOrEqual()`
+
+Checks whether a number is greater than or equal to the expected value.
+
+```javascript
+expect(allData[0]).toBeGreaterThanOrEqual(1);
+```
+
+**Condition:** `actual >= expected`
+
+### 5. `toBeLessThan()`
+
+Checks whether a number is strictly less than the expected value.
+
+```javascript
+expect(allData[0]).toBeLessThan(5);
+```
+
+**Condition:** `actual < expected`
+
+### 6. `toBeLessThanOrEqual()`
+
+Checks whether a number is less than or equal to the expected value.
+
+```javascript
+expect(allData[0]).toBeLessThanOrEqual(5);
+```
+
+**Condition:** `actual <= expected`
+
+### 7. Quick Comparison
+
+| Matcher                    | Condition            |
+| -------------------------- | -------------------- |
+| `toBeFalsy()`              | Value is falsy.      |
+| `toBeTruthy()`             | Value is truthy.     |
+| `toBeGreaterThan()`        | `actual > expected`  |
+| `toBeGreaterThanOrEqual()` | `actual >= expected` |
+| `toBeLessThan()`           | `actual < expected`  |
+| `toBeLessThanOrEqual()`    | `actual <= expected` |
+
+### Key Takeaways
+
+- `toBeFalsy()` and `toBeTruthy()` check JavaScript truthiness.
+- `.not` reverses a matcher condition.
+- Greater-than and less-than matchers are used for numerical comparisons.
+- `toBeGreaterThan()` and `toBeLessThan()` exclude equality.
+- `toBeGreaterThanOrEqual()` and `toBeLessThanOrEqual()` include equality.
