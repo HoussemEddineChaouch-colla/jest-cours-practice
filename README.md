@@ -901,3 +901,73 @@ Your matcher uses strict comparisons (`>` and `<`), meaning the boundary values 
 - `&&` checks that multiple conditions are satisfied.
 - `>` and `<` exclude the range boundaries.
 - You can reuse custom matchers across multiple test cases.
+
+## 16 - Expect Any And Anything And Array Containing
+
+### 1. `expect.anything()`
+
+Matches any value except `null` and `undefined`.
+
+```javascript
+expect("Houssem").toEqual(expect.anything());
+expect(1).toEqual(expect.anything());
+expect([1, 2, 3, 4]).toEqual(expect.anything());
+```
+
+**Important:** `expect.anything()` does not accept `null` or `undefined`.
+
+### 2. `expect.any(Constructor)`
+
+Matches any value that has the specified type or constructor.
+
+```javascript
+test("Expect Any Constructor", () => {
+  expect(10).toEqual(expect.any(Number));
+});
+```
+
+**Use case:** Verify that a value belongs to a specific type.
+
+Other examples:
+
+```javascript
+expect("Houssem").toEqual(expect.any(String));
+expect(true).toEqual(expect.any(Boolean));
+expect([]).toEqual(expect.any(Array));
+expect({}).toEqual(expect.any(Object));
+```
+
+### 3. `expect.arrayContaining(array)`
+
+Checks whether an array contains all the expected elements, regardless of their order.
+
+```javascript
+test("Expect Array Containing", () => {
+  const myArray = [1, 2, 3, 4, 5];
+
+  expect(myArray).toEqual(expect.arrayContaining([5, 3, 4]));
+});
+```
+
+**Use case:** Verify that an array contains specific elements without requiring an exact match or order.
+
+**Important:**
+- The received array can contain additional elements.
+- The expected elements can appear in any order.
+- All expected elements must be present.
+
+### 4. Quick Comparison
+
+| Method | Purpose |
+|---|---|
+| `expect.anything()` | Matches anything except `null` and `undefined`. |
+| `expect.any(Number)` | Matches a value of the specified constructor/type. |
+| `expect.any(String)` | Matches a string. |
+| `expect.arrayContaining([...])` | Checks whether an array contains the expected elements. |
+
+### Key Takeaways
+
+- `expect.anything()` accepts almost any non-nullish value.
+- `expect.any(Constructor)` checks values against a specified constructor.
+- `expect.arrayContaining()` checks partial array contents.
+- These methods are especially useful when testing complex objects and arrays.

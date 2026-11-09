@@ -134,4 +134,27 @@ expect.extend({
 test("check if year between years range", () => {
   expect(1982).toBeBetween(1980, 2020);
 });
- 
+
+//expect.anything() anything but Undefind + Null
+
+test.skip("Expect Anything", () => {
+  let x;
+  expect("Houssem").toEqual(expect.anything());
+  expect(1).toEqual(expect.anything());
+  expect([1, 2, 3, 4]).toEqual(expect.anything());
+  expect(x).toEqual(expect.anything());
+  expect(null).toEqual(expect.anything());
+});
+
+// expect.any(Constructor)
+
+test("Expect Any Constructor", () => {
+  expect(10).toEqual(expect.any(Number));
+});
+
+// expect.arrayContaining(array)
+
+test("Expect Any Constructor", () => {
+  const myArray = [1, 2, 3, 4, 5];
+  expect(myArray).toEqual(expect.arrayContaining([5, 3, 4]));
+});
