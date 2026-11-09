@@ -971,3 +971,144 @@ test("Expect Array Containing", () => {
 - `expect.any(Constructor)` checks values against a specified constructor.
 - `expect.arrayContaining()` checks partial array contents.
 - These methods are especially useful when testing complex objects and arrays.
+
+## 17 - Code Coverage
+
+### 1. What Is Code Coverage?
+
+Code Coverage is a testing metric that measures how much of your source code is executed when running your tests.
+
+It helps identify parts of your code that are not covered by tests.
+
+### 2. The `filterName()` Function
+
+Create `input.js`:
+
+```javascript
+function filterName(name) {
+  if (name === undefined) {
+    name = "Unknown";
+  }
+
+  if (name.startsWith(" ") || name.endsWith(" ")) {
+    name = name.trim();
+  }
+
+  if (name.length > 10) {
+    name = name.substring(0, 10);
+  }
+
+  if (name.startsWith("_")) {
+    name = name.substring(1);
+  }
+
+  if (name === "Hell") {
+    throw Error("This Name is Not Allowed");
+  }
+
+  return name;
+}
+
+module.exports = filterName;
+```
+
+This function provides several conditions to practice code coverage:
+
+- Checks whether the name is `undefined`.
+- Removes leading and trailing spaces.
+- Limits the name to 10 characters.
+- Removes an underscore at the beginning.
+- Throws an error if the name is `"Hell"`.
+
+### 3. Run Jest With Coverage
+
+Execute:
+
+```bash
+npm test -- --coverage
+```
+
+**What does `--coverage` do?**
+
+It tells Jest to collect code coverage information while executing the tests.
+
+### 4. Understanding Coverage Metrics
+
+| Metric | Meaning |
+|---|---|
+| `% Stmts` | Percentage of executable statements executed. |
+| `% Branch` | Percentage of conditional branches executed. |
+| `% Funcs` | Percentage of functions called. |
+| `% Lines` | Percentage of executable lines executed. |
+| `Uncovered Line #s` | Line numbers that were not covered by tests. |
+
+### 5. Understanding Your Coverage Results
+
+Your current terminal report:
+
+| File | Statements | Branches | Functions | Lines |
+|---|---:|---:|---:|---:|
+| All files | 95% | 91.66% | 100% | 94.73% |
+| all.js | 100% | 100% | 100% | 100% |
+| input.js | 91.66% | 91.66% | 100% | 91.66% |
+| say.js | 100% | 100% | 100% | 100% |
+| sum.js | 100% | 100% | 100% | 100% |
+
+**Important observation:**
+
+- All functions were executed at least once.
+- `input.js` has some uncovered code.
+- Line `15` in `input.js` was not covered by the tests.
+- Your overall statement coverage is 95%.
+
+### 6. Configure Coverage In package.json
+
+You can configure Jest directly inside `package.json`:
+
+```json
+"jest": {
+  "collectCoverage": true
+}
+```
+
+**What does `collectCoverage` do?**
+
+Automatically collects coverage information whenever Jest runs, without requiring you to add `--coverage` manually.
+
+### 7. Generate An HTML Coverage Report
+
+You can configure Jest to generate an HTML report:
+
+```json
+"jest": {
+  "collectCoverage": true,
+  "coverageReporters": [
+    "html"
+  ]
+}
+```
+
+After running:
+
+```bash
+npm test
+```
+
+Jest generates an HTML coverage report inside:
+
+```text
+coverage/
+  lcov-report/
+    index.html
+```
+
+Open `coverage/lcov-report/index.html` in your browser to explore the report visually.
+
+### Key Takeaways
+
+- Code Coverage measures how much of your code is executed by tests.
+- `--coverage` enables coverage collection from the command line.
+- `collectCoverage: true` enables coverage automatically.
+- `coverageReporters: ["html"]` generates a visual HTML report.
+- Uncovered lines and branches help identify missing test cases.
+- High coverage does not necessarily mean your tests are correct or complete.

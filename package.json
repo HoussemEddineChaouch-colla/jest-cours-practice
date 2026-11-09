@@ -12,5 +12,11 @@
   "type": "commonjs",
   "devDependencies": {
     "jest": "^30.5.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "html"
+    ]
   }
 }

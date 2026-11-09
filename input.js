@@ -11,6 +11,9 @@ function filterName(name) {
   if (name.startsWith("_")) {
     name = name.substring(1);
   }
+  if (name === "Hell") {
+    throw Error("This Name is Not Allowed");
+  }
   return name;
 }
 
