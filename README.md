@@ -668,3 +668,85 @@ expect(allData[0]).toBeLessThanOrEqual(5);
 - Greater-than and less-than matchers are used for numerical comparisons.
 - `toBeGreaterThan()` and `toBeLessThan()` exclude equality.
 - `toBeGreaterThanOrEqual()` and `toBeLessThanOrEqual()` include equality.
+
+
+## 13 - Jest Matchers Part 3 And Trainings
+
+### 1. `toBeUndefined()`
+
+Checks whether the actual value is `undefined`.
+
+```javascript
+let a;
+
+expect(a).toBeUndefined();
+```
+
+**Use case:** Verify that a variable has been declared but has not been assigned a value.
+
+### 2. `toMatch()`
+
+Checks whether a string matches a specified regular expression (RegExp).
+
+```javascript
+let myString = "I Love Javascript";
+
+expect(myString).toMatch(/Javascript/);
+```
+
+**Use case:** Verify that a string contains a specific substring or matches a particular text pattern.
+
+**Note:** You can also use a regular expression with flags:
+
+```javascript
+expect(myString).toMatch(/javascript/i);
+```
+
+The `i` flag makes the matching case-insensitive.
+
+### 3. `toHaveProperty()`
+
+Checks whether an object contains a specified property.
+
+```javascript
+let myObject = {
+  name: "Houssem",
+  age: 24,
+};
+
+expect(myObject).toHaveProperty("age");
+```
+
+**Use case:** Verify that the `age` property exists in the object.
+
+### 4. `toHaveProperty()` With Expected Value
+
+You can also check whether a property exists and has a specific value by passing a second argument.
+
+```javascript
+let myObject = {
+  name: "Houssem",
+  age: 24,
+};
+
+expect(myObject).toHaveProperty("age", 24);
+```
+
+**Use case:** Verify both the existence of the `age` property and that its value is `24`.
+
+### 5. Quick Comparison
+
+| Matcher | Purpose |
+|---|---|
+| `toBeUndefined()` | Checks whether a value is `undefined`. |
+| `toMatch()` | Checks whether a string matches a RegExp. |
+| `toHaveProperty()` | Checks whether an object has a property. |
+| `toHaveProperty(key, value)` | Checks property existence and its expected value. |
+
+### Key Takeaways
+
+- `toBeUndefined()` checks for undefined values.
+- `toMatch()` is useful for string and pattern matching.
+- RegExp allows flexible text matching.
+- `toHaveProperty()` checks object properties.
+- Passing a second argument to `toHaveProperty()` also verifies the property's value.
